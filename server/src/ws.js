@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws';
 import { createEngine } from './stt/index.js';
-import { Transcript } from './models/transcript.js';
+import { saveLiveTranscript } from './services/transcript.service.js';
 
 // One WebSocket connection per browser tab. Binary messages in = 16 kHz mono
 // PCM16 mic chunks; JSON text messages out = transcription events.
@@ -24,12 +24,7 @@ export function setupWs(server) {
           return;
         }
         try {
-          const row = await Transcript.create({
-            text: trimmed,
-            language: language ?? null,
-            durationMs: durationMs ?? null,
-            source: 'live',
-          });
+          const row = await saveLiveTranscript({ text: trimmed, language, durationMs });
           send({ type: 'final', transcript: row.toJSON() });
         } catch (err) {
           console.error('[ws] failed to save transcript:', err.message);

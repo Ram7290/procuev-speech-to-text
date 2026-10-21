@@ -6,7 +6,6 @@ import cors from 'cors';
 import express from 'express';
 
 import { sequelize } from './db.js';
-import { Transcript } from './models/transcript.js';
 import transcriptsRouter from './routes/transcripts.js';
 import { setupWs } from './ws.js';
 import { provider } from './stt/index.js';
