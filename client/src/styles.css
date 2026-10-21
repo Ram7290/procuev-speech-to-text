@@ -1,0 +1,105 @@
+:root {
+  --bg: #0e1116;
+  --panel: #161b24;
+  --border: #262d3a;
+  --text: #e8ecf3;
+  --muted: #8b93a5;
+  --accent: #4f8cff;
+  --accent-dim: #2c4a80;
+  --danger: #ff5c6c;
+  --ok: #3ecf8e;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app { min-height: 100vh; display: flex; flex-direction: column; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; border-bottom: 1px solid var(--border); background: var(--panel);
+  flex-wrap: wrap; gap: 10px;
+}
+.brand { font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+.brand-sub { color: var(--muted); font-weight: 400; font-size: 13px; }
+.topbar nav { display: flex; gap: 6px; }
+.topbar nav a { color: var(--muted); text-decoration: none; padding: 7px 14px; border-radius: 8px; font-size: 14px; }
+.topbar nav a.active { color: var(--text); background: var(--accent-dim); }
+
+main { flex: 1; width: 100%; max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
+
+/* ---- live page ---- */
+.live-controls { display: flex; align-items: center; gap: 18px; justify-content: center; margin: 8px 0 18px; }
+.mic {
+  width: 76px; height: 76px; border-radius: 50%; border: none; cursor: pointer; font-size: 30px;
+  background: var(--accent-dim); transition: transform 0.1s, background 0.2s;
+}
+.mic:hover { transform: scale(1.05); }
+.mic--on { background: var(--danger); }
+.live-status { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 14px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+.dot--listening { background: var(--ok); animation: pulse 1.2s infinite; }
+.dot--transcribing { background: var(--accent); animation: pulse 0.7s infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+.badge {
+  font-size: 11px; padding: 2px 8px; border-radius: 999px;
+  background: var(--accent-dim);
+}
+.badge--dim { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+
+.meter {
+  height: 4px; border-radius: 2px; background: var(--panel); overflow: hidden;
+  margin: 0 auto 22px; max-width: 420px;
+}
+.meter-fill { height: 100%; background: var(--ok); width: 0; transition: width 0.08s linear; }
+
+.error {
+  background: rgba(255, 92, 108, 0.12); border: 1px solid var(--danger);
+  color: var(--danger); padding: 10px 14px; border-radius: 10px; margin: 0 0 16px; font-size: 14px;
+}
+
+.partial { text-align: center; color: var(--muted); font-style: italic; font-size: 18px; line-height: 1.5; min-height: 24px; margin: 0 0 12px; }
+.empty { text-align: center; color: var(--muted); margin-top: 48px; line-height: 1.6; }
+
+.finals { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.final-text { margin: 0 0 8px; font-size: 17px; line-height: 1.5; }
+.final-meta, .row-meta { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; flex-wrap: wrap; }
+.spacer { flex: 1; }
+.saved { color: var(--ok); }
+
+button {
+  background: var(--accent); color: #fff; border: none; border-radius: 8px;
+  padding: 7px 14px; font-size: 13px; cursor: pointer;
+}
+button:hover { filter: brightness(1.1); }
+button.ghost { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+button.ghost:hover { color: var(--text); }
+button.danger:hover { border-color: var(--danger); color: var(--danger); }
+
+/* ---- history page ---- */
+.toolbar { display: flex; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+.toolbar input {
+  flex: 1; min-width: 180px; background: var(--panel); border: 1px solid var(--border);
+  color: var(--text); padding: 9px 12px; border-radius: 8px; font-size: 14px;
+}
+.toolbar input:focus { outline: 1px solid var(--accent); }
+.add { display: flex; gap: 8px; flex: 2; }
+.add input { flex: 1; }
+
+.rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.row-text { margin: 0 0 8px; line-height: 1.5; white-space: pre-wrap; }
+.row textarea {
+  width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--accent-dim);
+  border-radius: 8px; padding: 8px 10px; font: inherit; resize: vertical;
+}
+.row-actions { display: flex; gap: 8px; margin-top: 8px; }
