@@ -64,12 +64,11 @@ To test in production mode locally: `npm run build` in `client/`, then `SERVE_CL
 ### Using the self-hosted engine (no API at all)
 
 ```bash
-powershell scripts/setup-whisper.ps1   # downloads model + builds whisper-cli (Windows)
-# or: MODEL=small ./scripts/setup-whisper.sh   (Linux/macOS)
-# requires CMake + a C/C++ toolchain
+powershell scripts/setup-whisper.ps1   # downloads the prebuilt whisper-cli binary + model (Windows, no compiler needed)
+# or: MODEL=small ./scripts/setup-whisper.sh   (Linux/macOS — builds from source, needs CMake)
 ```
 
-Then in `server/.env` set `STT_PROVIDER=local`, `WHISPER_BIN=bin/whisper-cli.exe`, `WHISPER_MODEL=models/ggml-small.bin` (adjust per OS) and restart. Runs on CPU — `small` locally, `base` on low-memory servers.
+Then in `server/.env` set `STT_PROVIDER=local`, `WHISPER_BIN=bin/Release/whisper-cli.exe`, `WHISPER_MODEL=models/ggml-small.bin` (adjust per OS) and restart. Runs on CPU — `small` locally, `base` on low-memory servers.
 
 ## API
 

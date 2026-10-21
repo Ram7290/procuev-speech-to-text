@@ -10,8 +10,8 @@ const binPath = () => resolveFromCwd(process.env.WHISPER_BIN || '');
 const modelPath = () => resolveFromCwd(process.env.WHISPER_MODEL || '');
 
 // Transcribe one 16 kHz mono PCM16 segment with the local whisper.cpp binary.
-// Returns { text, language } — language is Whisper's auto-detection.
-export async function transcribeLocal(int16) {
+// Returns { text, language } — language is Whisper's auto-detection (default).
+export async function transcribeLocal(int16, { language = 'auto' } = {}) {
   const bin = binPath();
   const model = modelPath();
   if (!bin || !model) {
@@ -23,8 +23,10 @@ export async function transcribeLocal(int16) {
 
   try {
     const { stdout, stderr } = await new Promise((resolve, reject) => {
-      // -nt: plain text output (no timestamps); language auto-detected per segment
-      const child = spawn(bin, ['-m', model, '-f', wavPath, '-nt'], { windowsHide: true });
+      // -l auto: explicit auto-detect (also makes whisper-cli print the detected
+      // language, which we parse below); -bs 1: greedy instead of 5-beam search
+      // (decode is ~2× faster, near-real-time on CPU); -nt: plain text, no timestamps
+      const child = spawn(bin, ['-m', model, '-f', wavPath, '-l', language, '-bs', '1', '-nt'], { windowsHide: true });
       let stdout = '';
       let stderr = '';
       const timeout = setTimeout(() => child.kill('SIGKILL'), 60000);
