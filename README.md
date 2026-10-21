@@ -2,7 +2,7 @@
 
 A web app where you speak (Hindi, English, or a **mix of both**) and the system transcribes it in real time. Every finalized sentence is stored in PostgreSQL, and a dashboard gives full CRUD over your transcription history.
 
-> 🚀 **Live demo:** _[add deployed URL here]_
+> 🚀 **Live demo:** [https://procuev-speech-to-text.onrender.com](https://procuev-speech-to-text.onrender.com)
 > 🐙 **Note:** tested with code-mixed Hindi–English speech ("मुझे यह project पसंद है") — Hindi is transcribed in Devanagari, English words stay in Latin script.
 
 ## Features
